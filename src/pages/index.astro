@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import AlertButton from '../components/AlertButton.jsx';
 ---
 
 <Layout title="Sebastián | Portafolio">
@@ -10,5 +11,7 @@ import Layout from '../layouts/Layout.astro';
     <p style="margin-top:15px;">
       Construyendo experiencias digitales, videojuegos, arte y proyectos creativos.
     </p>
+
+    <AlertButton client:load />
   </section>
 </Layout>
