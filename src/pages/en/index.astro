@@ -1,0 +1,355 @@
+---
+import Layout from '../../layouts/Layout.astro'
+
+/* =========
+   EN Texts
+   ========= */
+const t = {
+  metaTitle: (name: string) => `${name} | Portfolio`,
+  hero: {
+    hi: (name: string) => `Hi, I'm ${name}`,
+    role: 'Software developer & data analyst',
+    tagline:
+      'Systems engineer focused on web development, data analysis, and process automation. Passionate about building solutions that improve management and decision-making.',
+    ctaProjects: 'View work',
+    ctaContact: 'Contact',
+    location: 'Cajamarca, Peru',
+    availability: 'Open to collaborations & freelance projects',
+  },
+  sections: {
+    skills: 'Skills',
+    projects: 'Work',
+    contact: 'Contact',
+    experience: 'Experience',
+    writeMe: 'Write me',
+    contactMsg:
+      'Shall we work together? Reach out for collaborations, consulting, or development & analytics projects.',
+  },
+  links: { github: 'GitHub', linkedin: 'LinkedIn', email: 'Email' },
+  projectBtnDemo: 'Live demo',
+  projectBtnRepo: 'Repo',
+}
+
+/* =========
+   Data
+   ========= */
+const profile = {
+  name: 'Sebastián',
+}
+
+const links = [
+  { label: t.links.github, href: 'https://github.com/SebHernandezAmoros' },
+  { label: t.links.linkedin, href: 'https://www.linkedin.com/in/sebastian-amoros/' },
+  { label: t.links.email, href: 'mailto:sebastianalbertoamoros@gmail.com' },
+]
+
+/* AVATAR DISABLED (empty string = hidden; layout becomes 1 column) */
+const avatarSrc = '' // keep empty to hide the photo
+const hasAvatar = Boolean(avatarSrc)
+
+/* Social in hero */
+const social = [
+  { label: 'GitHub', href: 'https://github.com/SebHernandezAmoros', icon: 'github' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/sebastian-amoros/', icon: 'linkedin' },
+  { label: 'Email', href: 'mailto:sebastianalbertoamoros@gmail.com', icon: 'mail' },
+]
+
+/* Skills (aligned with your real stacks) */
+const skills = [
+  { group: 'Frontend',         items: ['HTML', 'CSS', 'JavaScript', 'Vue', 'React', 'Bootstrap'] },
+  { group: 'Backend',          items: ['PHP', 'Laravel', 'Livewire', 'Node.js'] },
+  { group: 'Databases',        items: ['SQL Server', 'MySQL'] },
+  { group: 'Data / Analytics', items: ['Power BI', 'Advanced Excel', 'Basic ETL', 'Data Modeling'] },
+  { group: 'Tools',            items: ['Git', 'GitHub', 'Jira', 'Trello'] },
+  { group: 'Other',            items: ['WordPress'] },
+]
+
+/* Work */
+const projects = [
+  {
+    title: 'Mental Health Observatory',
+    description:
+      'Public portal with interactive dashboards and dynamic filters to visualize regional mental-health indicators. Improves transparency and decision-making.',
+    stack: ['Livewire', 'SQL Server', 'Node.js'],
+    link: '',
+    repo: '',
+  },
+  {
+    title: 'Mental Health Statistical System',
+    description:
+      'Data consolidation, cleaning, and analysis; dynamic reports for Power BI and Excel support. Flow automation and data-quality improvements.',
+    stack: ['SQL Server', 'Excel'],
+    link: '',
+    repo: '',
+  },
+  {
+    title: 'Virtual Classroom for Engineers (CONIT)',
+    description:
+      'Platform with roles, courses, lessons, and assessments. Database design and key features for a complete learning experience.',
+    stack: ['MySQL', 'Laravel', 'Vue'],
+    link: '',
+    repo: '',
+  },
+  {
+    title: 'Corporate Website (Peña Dorada Ingenieros)',
+    description:
+      'Institutional site with CRM and contact forms. Improved response times and customer support.',
+    stack: ['React'],
+    link: '',
+    repo: '',
+  },
+]
+
+/* Experience */
+const experience = [
+  {
+    role: 'Systems Developer',
+    company: 'DIRESA Cajamarca (OITE)',
+    period: 'Apr 2025 — Oct 2025',
+    bullets: [
+      'Analytical mental-health report with dashboards and dynamic charts.',
+      'Regional observatory restructuring with a press-notes module.',
+      'Improved data visualization and transparency for decision-making.',
+    ],
+  },
+  {
+    role: 'Systems Assistant',
+    company: 'CONIT',
+    period: 'Oct 2022 — May 2023',
+    bullets: [
+      'Virtual classroom with modules, exams, and profiles.',
+      'Database design and essential educational features.',
+      'Implemented SEO and visibility optimizations.',
+    ],
+  },
+  {
+    role: 'Intern',
+    company: 'Peña Dorada Ingenieros S.R.L.',
+    period: 'Apr 2022 — Jul 2022',
+    bullets: [
+      'Designed and updated the institutional website.',
+      'Implemented CRM and contact forms.',
+      'Improved response times and customer service.',
+    ],
+  },
+]
+
+const contact = { email: 'sebastianalbertoamoros@gmail.com' }
+---
+
+<style>
+  .wrap { max-width:1100px; margin:0 auto; padding:0 1rem; }
+  .center { text-align:center; }
+  .muted { color:#a5adc1; }
+
+  .chip {
+    display:inline-block; padding:6px 10px; border:1px solid #253057;
+    border-radius:999px; margin:4px; font-size:.9rem; background:#121a30;
+  }
+
+  .card {
+    border:1px solid #1b2240; border-radius:16px; padding:16px; margin:12px 0;
+    background:#0f1630; box-shadow:0 12px 38px rgba(0,0,0,.35);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 16px 44px rgba(0,0,0,.42); }
+
+  .grid { display:grid; gap:16px; }
+  @media (min-width: 900px) { .grid-2 { grid-template-columns:1fr 1fr; } }
+
+  /* Buttons */
+  .btn {
+    display:inline-block; padding:12px 18px; border-radius:12px;
+    background:#4f46e5; color:#fff; border:1px solid #4338ca;
+    text-decoration:none; font-weight:600; line-height:1;
+    box-shadow: 0 10px 22px rgba(79,70,229,.25);
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn.ghost {
+    background: transparent; color:#e7e9ee; border:1px solid #2a3046;
+    box-shadow:none;
+  }
+
+  .section { padding:3.5rem 0; }
+  .h1 { font-size:2.4rem; font-weight:800; margin:0 0 .6rem 0; }
+  .h2 { font-size:1.6rem; font-weight:800; margin:0 0 .8rem 0; }
+
+  .langswitch {
+    display:flex; gap:.5rem; justify-content:flex-end; align-items:center;
+  }
+  .langswitch a {
+    color:#a5adc1; text-decoration:none; padding:8px 12px;
+    border:1px solid #2a3046; border-radius:999px; display:inline-block;
+  }
+  .langswitch a.active { background:#16224a; color:#e7e9ee; }
+
+  /* ====== Modern HERO ====== */
+  .hero { padding-top: 2.2rem; }
+  .grid-hero {
+    display: grid; gap: 24px;
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: center;
+  }
+  .grid-hero.single { grid-template-columns: 1fr; } /* no photo */
+
+  @media (max-width: 880px) {
+    .grid-hero { grid-template-columns: 1fr; }
+  }
+
+  .display {
+    font-size: clamp(2.2rem, 6vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0 0 .5rem 0;
+  }
+  .role { font-weight: 600; font-size: 1.1rem; margin: .2rem 0 1rem; color:#dfe4f5; }
+  .tagline { margin: .5rem 0 1.25rem; max-width: 760px; }
+
+  .hero-cta { display:flex; gap:.8rem; margin: 1rem 0 1rem; flex-wrap:wrap; }
+
+  .meta { margin:1rem 0 0; }
+
+  .social { display:flex; gap:.6rem; margin-top:1rem; }
+  .social-btn {
+    width:40px; height:40px; display:grid; place-items:center;
+    border:1px solid #2a3046; border-radius:999px; color:#d4daf0;
+    text-decoration:none; background:#101632;
+  }
+  .social-btn:hover { background:#121a3a; }
+
+  /* Photo (hidden because avatarSrc === '') */
+  .avatar-wrap { position: relative; width:min(360px, 85%); margin-inline:auto; }
+  .avatar {
+    width:100%; height:auto; border-radius: 28px;
+    display:block; border:1px solid #1b2240; box-shadow: 0 22px 60px rgba(0,0,0,.45);
+    object-fit: cover;
+  }
+  .badge {
+    position:absolute; right:-12px; bottom:-12px;
+    background:#0f1630; border:1px solid #24305a; color:#dfe4f5;
+    padding:.55rem .9rem; border-radius:14px; font-size:.9rem;
+    box-shadow: 0 10px 28px rgba(0,0,0,.35);
+  }
+</style>
+
+<Layout title={t.metaTitle(profile.name)}>
+  <!-- HERO -->
+  <section class="section hero">
+    <div class={`wrap grid-hero ${hasAvatar ? '' : 'single'}`}>
+      <!-- Left column: copy -->
+      <div class="hero-copy">
+        <div class="langswitch" style="margin-bottom:1rem;">
+          <a href="/es/">ES</a>
+          <a href="/en/" class="active">EN</a>
+        </div>
+
+        <h1 class="display">{t.hero.hi(profile.name)}</h1>
+        <p class="role">{t.hero.role}</p>
+        <p class="muted tagline">{t.hero.tagline}</p>
+
+        <div class="hero-cta">
+          <a class="btn" href="#projects">{t.hero.ctaProjects}</a>
+          <a class="btn ghost" href="#contact">{t.hero.ctaContact}</a>
+        </div>
+
+        <p class="muted meta">
+          {t.hero.location} · {t.hero.availability}
+        </p>
+
+        <!-- Social -->
+        <div class="social">
+          {social.map(s => (
+            <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} class="social-btn">
+              {s.icon === 'github'   && <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.42-4.04-1.42-.55-1.4-1.34-1.77-1.34-1.77-1.1-.76.08-.74.08-.74 1.22.09 1.86 1.26 1.86 1.26 1.08 1.85 2.83 1.32 3.52 1.01.11-.8.42-1.32.76-1.63-2.67-.31-5.48-1.34-5.48-5.96 0-1.32.47-2.39 1.25-3.23-.13-.31-.54-1.58.12-3.29 0 0 1.01-.32 3.31 1.23a11.5 11.5 0 0 1 6.02 0c2.3-1.55 3.31-1.23 3.31-1.23.66 1.71.25 2.98.12 3.29.78.84 1.25 1.91 1.25 3.23 0 4.63-2.81 5.65-5.49 5.96.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .5Z"/></svg>}
+              {s.icon === 'linkedin' && <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5Zm.02 5.5H2V22h3V9Zm4 0H6v13h3v-7.1c0-1.87.98-3.1 2.56-3.1 1.2 0 1.44.86 1.44 2.03V22h3v-7.92c0-3.07-1.64-4.5-3.82-4.5-1.77 0-2.56.98-2.98 1.67h-.04V9Z"/></svg>}
+              {s.icon === 'mail'     && <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm0 2v.01L12 13l8-6.99V6H4Zm16 12V8l-8 6-8-6v10h16Z"/></svg>}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Right column (only if photo exists) -->
+      {hasAvatar && (
+        <div class="hero-media">
+          <div class="avatar-wrap">
+            <img src={avatarSrc} alt="Sebastian’s photo" class="avatar" />
+            <div class="badge">
+              <strong>3+ years</strong> of experience
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="section">
+    <div class="wrap">
+      <h2 class="h2">{t.sections.skills}</h2>
+      <div class="grid grid-2">
+        {skills.map((s) => (
+          <div class="card">
+            <strong>{s.group}</strong>
+            <div style="margin-top:8px;">
+              {s.items.map((it) => (<span class="chip">{it}</span>))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="projects" class="section">
+    <div class="wrap">
+      <h2 class="h2">{t.sections.projects}</h2>
+      <div class="grid grid-2">
+        {projects.map((p) => (
+          <article class="card">
+            <h3 style="margin:0 0 6px 0;">{p.title}</h3>
+            <p class="muted">{p.description}</p>
+            <div style="margin:8px 0;">
+              {p.stack.map((tok) => (<span class="chip">{tok}</span>))}
+            </div>
+            <div style="margin-top:8px;">
+              {p.link && <a class="btn" href={p.link} target="_blank" rel="noopener noreferrer">{t.projectBtnDemo}</a>}
+              {p.repo && <a class="btn ghost" style="margin-left:.6rem;" href={p.repo} target="_blank" rel="noopener noreferrer">{t.projectBtnRepo}</a>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+<!--   <section id="contact" class="section">
+    <div class="wrap center">
+      <h2 class="h2">{t.sections.contact}</h2>
+      <p class="muted" style="max-width:720px; margin-inline:auto;">{t.sections.contactMsg}</p>
+      <div style="margin-top:12px;">
+        <a class="btn" href={`mailto:${contact.email}`}>{t.sections.writeMe}</a>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="section">
+    <div class="wrap">
+      <h2 class="h2">{t.sections.experience}</h2>
+      <div class="grid grid-2">
+        {experience.map((e) => (
+          <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <strong>{e.role}</strong>
+              <span class="muted">{e.period}</span>
+            </div>
+            <div class="muted" style="margin:4px 0 8px 0;">{e.company}</div>
+            <ul style="margin:0; padding-left:18px;">
+              {e.bullets.map((b) => (<li style="margin:6px 0;">{b}</li>))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

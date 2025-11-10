@@ -1,0 +1,230 @@
+---
+import Layout from '../../layouts/Layout.astro'
+
+/* =========
+   Texts EN
+   ========= */
+const t = {
+  metaTitle: (name: string) => `${name} | Game Dev`,
+  hero: {
+    hi: (name: string) => `Hi, I'm ${name}`,
+    role: "Game Developer",
+    subtitle:
+      "Prototypes, micro-games, and narrative design. 2D experiences with Godot, pixel-art aesthetics, and worldbuilding.",
+    ctaWork: "View work",
+    ctaContact: "Contact",
+  },
+  sections: {
+    skills: "Game Dev Skills",
+    work: "Selected Projects",
+    rpg: "Tabletop RPG Design (TTRPG)",
+  },
+  labels: {
+    engine: "Engine",
+    role: "Role",
+    genre: "Genre",
+    year: "Year",
+    demo: "Play on Itch.io",
+    repo: "Repo",
+    trailer: "Trailer",
+    doc: "View page",
+  },
+}
+
+const profile = { name: "Sebastián" }
+
+/* ===== Contact ===== */
+const contactMail = "oll0caih0project@gmail.com"
+const mailSubject = encodeURIComponent("Portfolio – Game Dev")
+const mailHref = `mailto:${contactMail}?subject=${mailSubject}`
+
+/* ===== Skills ===== */
+const skills = [
+  {
+    group: "Production & Design",
+    items: ["Game Design", "Level Design", "Narrative Writing", "Worldbuilding (Lore)"],
+  },
+  { group: "Art", items: ["Pixel Art", "Krita", "Photoshop"] },
+  { group: "Technology", items: ["Godot (2D)", "GDScript", "PC/Web Export"] },
+]
+
+/* ===== Projects ===== */
+const games = [
+  {
+    title: "The Cabin Case",
+    tagline: "2D Walking Simulator with an eerie atmosphere.",
+    description:
+      "Exploration of confined settings, chained clues, and small puzzles. Focused on mood, pacing, and micro-stories.",
+    meta: {
+      engine: "Godot",
+      role: "Game Designer · Programming · 2D Art",
+      genre: "Walking Simulator 2D",
+      year: "2024",
+    },
+    stack: ["Godot", "Pixel Art", "GDScript"],
+    links: { demo: "https://ollcaih.itch.io/the-cabin-case", trailer: "", repo: "" },
+  },
+  {
+    title: "Meat Eclipse",
+    tagline: "2D Classicvania action game.",
+    description:
+      "Prototype focused on game-feel: tight controls, responsive feedback, and short, intense difficulty curves.",
+    meta: {
+      engine: "Godot",
+      role: "Game Designer · Programming · 2D Art",
+      genre: "Classicvania / Action 2D",
+      year: "2024",
+    },
+    stack: ["Godot", "Pixel Art"],
+    links: { demo: "https://ollcaih.itch.io/meateclipse", trailer: "", repo: "" },
+  },
+]
+
+/* ===== TTRPG ===== */
+const ttrpg = {
+  title: "Comandos Anómalos",
+  tagline: "Tabletop role-playing game set in a weird World War II.",
+  description:
+    "A lightweight, mission-oriented system: quick resolution, risk management, and tools for narrative operations. Includes modules that expand storytelling (factions and generators).",
+  meta: { role: "Author · System · Setting", year: "2023" },
+  links: { doc: "https://ollcaih.itch.io/comandos-anomalos" },
+}
+
+/* Navigation */
+const nav = { es: "/es/gamedev/", en: "/en/gamedev/" }
+---
+
+<style>
+  /* ===== matches index style ===== */
+  .wrap { max-width:1100px; margin:0 auto; padding:0 1rem; }
+  .muted { color:#a5adc1; }
+  .section { padding:3.5rem 0; }
+  .h2 { font-size:1.6rem; font-weight:800; margin:0 0 .8rem 0; }
+
+  .langswitch { display:flex; gap:.5rem; justify-content:flex-end; margin-bottom:1rem; }
+  .langswitch a { color:#a5adc1; text-decoration:none; padding:8px 12px; border:1px solid #2a3046; border-radius:999px; }
+  .langswitch a.active { background:#16224a; color:#e7e9ee; }
+
+  .hero { padding-top: 2.2rem; }
+  .display { font-size: clamp(2.2rem, 6vw, 3.2rem); font-weight: 800; letter-spacing:-.02em; margin: 0 0 .2rem 0; }
+  .role { font-weight: 600; font-size: 1.1rem; margin: .2rem 0 1rem; color:#dfe4f5; }
+  .lead { font-size:1.05rem; }
+
+  .btn {
+    display:inline-block; padding:12px 18px; border-radius:12px;
+    background:#4f46e5; color:#fff; border:1px solid #4338ca; text-decoration:none;
+    font-weight:600; line-height:1; box-shadow:0 10px 22px rgba(79,70,229,.25);
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn.ghost { background:transparent; color:#e7e9ee; border:1px solid #2a3046; box-shadow:none; }
+  .btn + .btn { margin-left:.6rem; }
+
+  .grid { display:grid; gap:16px; }
+  @media (min-width: 900px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
+
+  .card {
+    border:1px solid #1b2240; border-radius:16px; padding:16px; margin:12px 0;
+    background:#0f1630; box-shadow:0 12px 38px rgba(0,0,0,.35);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 16px 44px rgba(0,0,0,.42); }
+
+  .chip {
+    display:inline-block; padding:6px 10px; border:1px solid #253057;
+    border-radius:999px; margin:4px; font-size:.9rem; background:#121a30;
+  }
+  .meta { display:flex; flex-wrap:wrap; gap:.4rem 1rem; margin:.6rem 0; color:#cfd6f2; font-size:.95rem; }
+</style>
+
+<Layout title={t.metaTitle(profile.name)}>
+
+  <!-- Language Switch -->
+  <div class="wrap langswitch">
+    <a href={nav.es}>ES</a>
+    <a href={nav.en} class="active">EN</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="section hero">
+    <div class="wrap">
+      <h1 class="display">{t.hero.hi(profile.name)}</h1>
+      <p class="role">{t.hero.role}</p>
+      <p class="muted lead">{t.hero.subtitle}</p>
+      <div style="margin-top:14px;">
+        <a class="btn" href="#work">{t.hero.ctaWork}</a>
+        <a class="btn ghost" href={mailHref}>{t.hero.ctaContact}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="section">
+    <div class="wrap">
+      <h2 class="h2">{t.sections.skills}</h2>
+      <div class="grid grid-2">
+        {skills.map(s => (
+          <div class="card">
+            <strong>{s.group}</strong>
+            <div style="margin-top:8px;">
+              {s.items.map(it => (<span class="chip">{it}</span>))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work" class="section">
+    <div class="wrap">
+      <h2 class="h2">{t.sections.work}</h2>
+      <div class="grid grid-2">
+        {games.map(g => (
+          <article class="card">
+            <h3 style="margin:0 0 6px 0;">{g.title}</h3>
+            <div class="muted" style="margin-bottom:.4rem;">{g.tagline}</div>
+            <p class="muted">{g.description}</p>
+
+            <div class="meta">
+              <span><strong>{t.labels.engine}:</strong> {g.meta.engine}</span>
+              <span><strong>{t.labels.role}:</strong> {g.meta.role}</span>
+              <span><strong>{t.labels.genre}:</strong> {g.meta.genre}</span>
+              <span><strong>{t.labels.year}:</strong> {g.meta.year}</span>
+            </div>
+
+            <div style="margin-top:8px;">
+              {g.links.demo && <a class="btn" href={g.links.demo} target="_blank" rel="noopener noreferrer">{t.labels.demo}</a>}
+              {g.links.trailer && <a class="btn ghost" href={g.links.trailer} target="_blank" rel="noopener noreferrer">{t.labels.trailer}</a>}
+              {g.links.repo && <a class="btn ghost" href={g.links.repo} target="_blank" rel="noopener noreferrer">{t.labels.repo}</a>}
+            </div>
+
+            <div style="margin-top:8px;">
+              {g.stack.map(tag => (<span class="chip">{tag}</span>))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- TTRPG -->
+  <section id="ttrpg" class="section">
+    <div class="wrap">
+      <h2 class="h2">{t.sections.rpg}</h2>
+      <article class="card">
+        <h3 style="margin:0 0 6px 0;">{ttrpg.title}</h3>
+        <div class="muted" style="margin-bottom:.4rem;">{ttrpg.tagline}</div>
+        <p class="muted">{ttrpg.description}</p>
+        <div class="meta">
+          <span><strong>{t.labels.role}:</strong> {ttrpg.meta.role}</span>
+          <span><strong>{t.labels.year}:</strong> {ttrpg.meta.year}</span>
+        </div>
+        <div style="margin-top:8px;">
+          {ttrpg.links.doc && <a class="btn" href={ttrpg.links.doc} target="_blank" rel="noopener noreferrer">{t.labels.doc}</a>}
+          <a class="btn ghost" href={mailHref}>{t.hero.ctaContact}</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+</Layout>
